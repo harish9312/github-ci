@@ -19,22 +19,21 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: yarn install
+        run: |
+          yarn install
+      - name: yarn test
+        run: |
+          yarn test
+        env:
+          CI: true
 
-    - name: yarn install
-      run: |
-        yarn install
-    - name: yarn test
-      run: |
-        yarn test 
-      env:
-        CI: true
-      
-    - name: yarn build
-      run: |
-        yarn run build --if-present
-    - name: Add remote origin
-      run: |
-        git remote add heroku https://heroku:${{ secrets.0064713a-4be6-4ac1-a635-e297f32a5b9c }}@git.heroku.com/${{ secrets.github-ci }}.git
-    - name: Deploy to Heroku
-      run: |
-        git push heroku HEAD:master -f
+      - name: yarn build
+        run: |
+          yarn run build --if-present
+      - name: Add remote origin
+        run: |
+          git remote add heroku https://heroku:${{ secrets.0064713a-4be6-4ac1-a635-e297f32a5b9c }}@git.heroku.com/${{ secrets.github-ci }}.git
+      - name: Deploy to Heroku
+        run: |
+          git push heroku HEAD:master -f
